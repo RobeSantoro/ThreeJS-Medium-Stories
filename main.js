@@ -1,12 +1,10 @@
+import './style.css'
+
 import * as THREE from 'three'
 import Stats from 'three/examples/jsm/libs/stats.module.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
-
-// Canvas
-const canvas = document.querySelector('canvas.webgl')
-
-// Sizes
+// Window. Sizes
 const sizes = {
   height: window.innerHeight,
   width: window.innerWidth
@@ -15,19 +13,51 @@ const sizes = {
 // Create a scene
 const scene = new THREE.Scene()
 
+// Canvas
+const canvas = document.querySelector('canvas.webgl')
+
 // Create a camera
-const camera = new THREE.PerspectiveCamera(  50,  sizes.width / sizes.height,  0.1,  1000)
+const camera = new THREE.PerspectiveCamera(  25,  sizes.width / sizes.height,  0.1,  1000)
 camera.position.z = 5
 scene.add(camera)
 
 // Orbit controls
 const controls = new OrbitControls(camera, canvas)
+controls.dampingFactor = 0.25
+controls.enableDamping = true
+controls.enableZoom = true
+controls.enablePan = true
+controls.enableRotate = true
+controls.autoRotate = true
+controls.autoRotateSpeed = 10
+
+// Renderer
+const renderer = new THREE.WebGLRenderer({
+  canvas: canvas,
+  antialias: true,
+  alpha: false,
+  preserveDrawingBuffer: false,
+  premultipliedAlpha: false })
+renderer.setSize(sizes.width, sizes.height)
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2))
+renderer.setClearColor(0x101010, 0)
+renderer.render(scene, camera)
+
+
+// Load the environment texture
+const textureLoader = new THREE.TextureLoader()
+const envTexture = textureLoader.load('./assets/garage_1k.jpg')
+envTexture.mapping = THREE.EquirectangularReflectionMapping
 
 // Create a cube
-const geometry = new THREE.BoxGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial({
-  color: 0x000000,
-  wireframe: true })
+const geometry = new THREE.BoxBufferGeometry(1, 1, 1)
+const material = new THREE.MeshStandardMaterial({
+  color: 0xffffff,
+  envMap: envTexture,
+  metalness: 1,
+  roughness: 0.02,
+  envMapIntensity: 1,
+  side: THREE.DoubleSide })
 const cube = new THREE.Mesh(geometry, material)
 scene.add(cube)
 
@@ -36,20 +66,6 @@ const light = new THREE.PointLight(0xffffff, 1, 100)
 light.position.set(10, 10, 10)
 scene.add(light)
 
-// Renderer and clock 
-const renderer = new THREE.WebGLRenderer({
-  canvas: canvas,
-  antialias: true,
-  alpha: true,
-  preserveDrawingBuffer: true,
-  premultipliedAlpha: true
-  
- })
-
-renderer.setSize(sizes.width, sizes.height)
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-renderer.setClearColor(0x101010, 0)
-renderer.render(scene, camera)
 
 // Initialize the main loop
 const clock = new THREE.Clock()
@@ -61,8 +77,8 @@ const stats = new Stats()
 stats.showPanel(0)
 document.body.appendChild(stats.dom)
 
-// Create the main loop invoking the tick function// Animate
-const tick = () =>
+// Create the main loop invoking the animate function
+const animate = () =>
 {
   const elapsedTime = clock.getElapsedTime()
   const deltaTime = elapsedTime - lastElapsedTime
@@ -80,22 +96,22 @@ const tick = () =>
   // Render
   renderer.render(scene, camera)    
 
-  // Call tick again on the next frame
-  window.requestAnimationFrame(tick)
+  // Call animate again on the next frame
+  requestAnimationFrame(animate)
 }
 
-tick()
+animate()
 
 
 // Manage the resize of the window
-window.addEventListener('resize', () => {  
+addEventListener('resize', () => {  
   
-  sizes.width = window.innerWidth
-  sizes.height = window.innerHeight
+  sizes.width = innerWidth
+  sizes.height = innerHeight
   camera.aspect = sizes.width / sizes.height
   camera.updateProjectionMatrix()
   renderer.setSize(sizes.width, sizes.height)
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2))
   renderer.render(scene, camera)
   
 })
