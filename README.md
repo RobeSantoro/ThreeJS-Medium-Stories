@@ -1,4 +1,4 @@
-# Testing Vite with Three.js
+# Vite Three.js Template
 
 Usage
 
