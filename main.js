@@ -2,9 +2,6 @@
 import * as THREE from 'three'
 import Stats from 'three/examples/jsm/libs/stats.module.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-// Import GLTF and DRACO loader
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 
 /****************************************************************************************/
 /*********************************************************************** THREE.JS SETUP */
@@ -78,6 +75,9 @@ scene.add(cube)
 /*****************************************************************************************/
 
 
+/*****************************************************************************************/
+/************************************************************************* GLTF SETUP ****/
+/*****************************************************************************************/
 
 
 /*****************************************************************************************/
