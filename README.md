@@ -11,11 +11,13 @@ npm init vite
 
 - Give the Project a name and Vanilla JS as Framework and variant
 
-√ Project name: ... vite-test
-√ Select a framework: » vanilla
-√ Select a variant: » vanilla
+- √ Project name: ... vite-test
 
-Enter the directory created
+- √ Select a framework: » vanilla
+
+- √ Select a variant: » vanilla
+
+Enter the directory
 ```bash
 cd vite-test
 ```
