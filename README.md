@@ -2,6 +2,57 @@
 
 ![alt text](./SocialImage.jpg)
 
+# Vite App
+
+### Init a Vite project with with npm 
+```bash
+npm init vite
+```
+
+- Give the Project a name and Vanilla JS as Framework and variant
+
+√ Project name: ... vite-test
+√ Select a framework: » vanilla
+√ Select a variant: » vanilla
+
+Enter the directory created
+```bash
+cd vite-test
+```
+
+- Install dependencies
+```bash
+npm install
+```
+
+- Create a vite.config.js file 
+```bash
+touch vite.config.js
+```
+
+- Set the public folder and include custom file extension
+```bash
+echo "export default { assetsInclude: ['**/*.glb', '**/*.gltf', '**/*.wasm'], publicDir: ['public'] }" > vite.config.js
+```
+
+- Create a /public folder accordingly
+```bash
+mkdir ./public
+```
+
+- Run code and check the files and folder created
+```bash
+code .
+```
+
+### vite.config.js
+```js
+export default {
+	assetsInclude: ['**/*.glb', '**/*.gltf', '**/*.wasm'],
+	publicDir: ['public']
+	}
+```
+___
 # index.html
 Add the link to the css file:
 ```html
@@ -39,6 +90,11 @@ html, body {
   left: 0;
   outline: none;
 }
+```
+___
+#### Install Three-JS
+```bash
+npm install three
 ```
 ___
 # main.js
