@@ -40,3 +40,9 @@ window.addEventListener('resize', function() {
   renderer.setSize(window.innerWidth, window.innerHeight)
   //renderer.render(scene, camera)
 })
+
+function animate() {
+  renderer.render(scene, camera)
+  requestAnimationFrame(animate)
+}
+animate()
