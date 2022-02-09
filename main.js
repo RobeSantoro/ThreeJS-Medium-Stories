@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 // Get canvas element
 const canvas = document.querySelector('canvas.webgl')
@@ -32,17 +33,24 @@ const renderer = new THREE.WebGLRenderer( { canvas : canvas } )
 renderer.setSize(window.innerWidth, window.innerHeight)
 renderer.render(scene, camera)
 
+// Add OrbitControls
+const controls = new OrbitControls(camera, canvas)
+controls.autoRotate = true
+
 // Add a listener to the window resize event
 window.addEventListener('resize', function() {
   camera.aspect = window.innerWidth / window.innerHeight
   camera.updateProjectionMatrix()
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
   renderer.setSize(window.innerWidth, window.innerHeight)
-  //renderer.render(scene, camera)
 })
 
+// Animate Loop
 function animate() {
   renderer.render(scene, camera)
+
+  controls.update()
+
   requestAnimationFrame(animate)
 }
 animate()
