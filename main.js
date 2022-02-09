@@ -31,5 +31,3 @@ const renderer = new THREE.WebGLRenderer( { canvas : canvas } )
 // Render the Scene
 renderer.setSize(window.innerWidth, window.innerHeight)
 renderer.render(scene, camera)
-
-
