@@ -31,3 +31,12 @@ const renderer = new THREE.WebGLRenderer( { canvas : canvas } )
 // Render the Scene
 renderer.setSize(window.innerWidth, window.innerHeight)
 renderer.render(scene, camera)
+
+// Add a listener to the window resize event
+window.addEventListener('resize', function() {
+  camera.aspect = window.innerWidth / window.innerHeight
+  camera.updateProjectionMatrix()
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+  renderer.setSize(window.innerWidth, window.innerHeight)
+  //renderer.render(scene, camera)
+})
