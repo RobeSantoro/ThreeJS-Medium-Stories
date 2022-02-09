@@ -152,5 +152,63 @@ scene.add(light)
 const renderer = new THREE.WebGLRenderer( { canvas : canvas } )
 // Render the Scene
 renderer.setSize(window.innerWidth, window.innerHeight)
-renderer.render(scene, camera)
+renderer.render(scene, camer
+```
+
+### addEventListener to window resize event
+```js
+// Add an event listener to the window resize
+window.addEventListener('resize', function() {
+  camera.aspect = window.innerWidth / window.innerHeight
+  camera.updateProjectionMatrix()
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+  renderer.setSize(window.innerWidth, window.innerHeight)
+  //renderer.render(scene, camera)
+})
+```
+Uncomment the `renderer.render(scene, camera)` line and resize the window to see the difference.
+
+### Create the animation loop
+```js
+function animate() {
+  renderer.render(scene, camera)
+  requestAnimationFrame(animate)
+}
+```
+Call the animate function
+```js
+animate()
+```
+### Add the Orbit Controls
+
+Import Orbit Controls
+```js
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+```
+
+Add the Orbit Controls and set a continous rotation
+```js
+// Add OrbitControls
+const controls = new OrbitControls(camera, canvas)
+controls.autoRotate = true
+```
+
+The Orbit Controls is working, but is not updated in the main loop, so the camera does not orbit around the cube. 
+
+Add the Update method of the Orbit Controls to the animate function
+```js
+function animate() {
+ renderer.render(scene, camera)  
+
+ controls.update() // Here
+
+ requestAnimationFrame(animate)
+}
+
+animate()
+```
+The camera is now orbiting around the cube.
+
+
+
 
