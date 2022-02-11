@@ -47,10 +47,13 @@ window.addEventListener('resize', function() {
 
 // Animate Loop
 function animate() {
+  // Render the Scene
   renderer.render(scene, camera)
 
+  // Update the controls
   controls.update()
 
+  // Call the animate function again on the next frame
   requestAnimationFrame(animate)
 }
 animate()
