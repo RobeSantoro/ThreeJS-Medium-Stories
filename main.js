@@ -33,6 +33,7 @@ const renderer = new THREE.WebGLRenderer( { canvas : canvas } )
 renderer.setSize(window.innerWidth, window.innerHeight)
 renderer.render(scene, camera)
 
+<<<<<<< HEAD
 // Add OrbitControls
 const controls = new OrbitControls(camera, canvas)
 controls.autoRotate = true
@@ -57,3 +58,6 @@ function animate() {
   requestAnimationFrame(animate)
 }
 animate()
+=======
+
+>>>>>>> parent of 3108b7c (ThreeJS Basic Template Start)
