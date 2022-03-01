@@ -32,10 +32,13 @@ light.position.set(-1, 3, 4)
 scene.add(light)
 
 // Create the Renderer
-const renderer = new THREE.WebGLRenderer( { canvas : canvas } )
+const renderer = new THREE.WebGLRenderer({
+  canvas : canvas,
+  antialias : true
+})
+
 renderer.setSize(window.innerWidth, window.innerHeight)
-// Render the Scene
-renderer.render(scene, camera)
+renderer.outputEncoding = THREE.sRGBEncoding;
 
 // Add OrbitControls
 const controls = new OrbitControls(camera, canvas)
