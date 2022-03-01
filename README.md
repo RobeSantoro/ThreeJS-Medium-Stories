@@ -1,10 +1,11 @@
-# Medium Stories on ThreejS Repository
+# Medium Stories on ThreejS
 
-This repository is the result of a series of articles I published on Medium in which I document my journey as a ThreeJS developer.
+This repository results from a series of articles I posted on Medium in which I report my journey as a ThreeJS developer.
+Read the full [stories on Medium](https://robesantoro.medium.com/)
 
 ![alt text](./SocialImage.jpg)
 
-Read the full [stories on Medium](https://robesantoro.medium.com/)
+
 
 
 
