@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 // Get the canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -13,11 +14,17 @@ camera.position.set(-5, 3, 5)
 camera.lookAt(new THREE.Vector3(0, 0, 0))
 scene.add(camera)
 
-// Create a Cube
-const geometry = new THREE.BoxGeometry(1, 1, 1)
-const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 })
-const cube = new THREE.Mesh(geometry, material)
-scene.add(cube)
+// Load the glb model
+const loader = new GLTFLoader()
+loader.load('https://d1a370nemizbjq.cloudfront.net/5f774362-16ea-465b-b44a-2ad4eaa79147.glb', // glb model
+function (gltf) { // onLoad callback
+  const model = gltf.scene
+  scene.add(model)
+})
+
+// Add a grid helper
+const gridHelper = new THREE.GridHelper(10, 10)
+scene.add(gridHelper)
 
 // Add a light
 const light = new THREE.DirectionalLight(0xffffff, 1)
