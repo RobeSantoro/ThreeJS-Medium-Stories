@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
+import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 // Get the canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -16,11 +16,20 @@ scene.add(camera)
 
 // Load the glb model
 const loader = new GLTFLoader()
-loader.load('https://d1a370nemizbjq.cloudfront.net/5f774362-16ea-465b-b44a-2ad4eaa79147.glb', // glb model
-function (gltf) { // onLoad callback
-  const model = gltf.scene
-  scene.add(model)
-})
+let mixer
+
+loader.load('./models/Avatar_Dance.glb', // updated glb model
+
+  function (gltf) {
+
+    const model = gltf.scene
+    const animations = gltf.animations
+
+    mixer = new THREE.AnimationMixer(model)
+    mixer.clipAction(animations[0]).play() // play the first animation
+
+    scene.add(model)
+  })
 
 // Add a grid helper
 const gridHelper = new THREE.GridHelper(10, 10)
@@ -33,8 +42,8 @@ scene.add(light)
 
 // Create the Renderer
 const renderer = new THREE.WebGLRenderer({
-  canvas : canvas,
-  antialias : true
+  canvas: canvas,
+  antialias: true
 })
 
 renderer.setSize(window.innerWidth, window.innerHeight)
@@ -42,7 +51,11 @@ renderer.outputEncoding = THREE.sRGBEncoding;
 
 // Add OrbitControls
 const controls = new OrbitControls(camera, canvas)
-controls.autoRotate = true
+controls.autoRotate = false
+
+// Initialize the main loop
+const clock = new THREE.Clock()
+let lastElapsedTime = 0
 
 // Animate Loop
 function animate() {
@@ -52,14 +65,23 @@ function animate() {
   // Update the controls
   controls.update()
 
+  const elapsedTime = clock.getElapsedTime()
+  const deltaTime = elapsedTime - lastElapsedTime
+  lastElapsedTime = elapsedTime
+
+  // Mixer update
+  if (mixer != undefined) {
+    mixer.update(deltaTime)
+  }
+
   // Call the animate function again on the next frame
   requestAnimationFrame(animate)
 }
 animate()
 
 // Add an event listener to the window resize
-window.addEventListener('resize', function() {
-  renderer.setSize(window.innerWidth, window.innerHeight) 
+window.addEventListener('resize', function () {
+  renderer.setSize(window.innerWidth, window.innerHeight)
   camera.aspect = window.innerWidth / window.innerHeight
   camera.updateProjectionMatrix()
 })
